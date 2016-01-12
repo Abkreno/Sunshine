@@ -7,11 +7,12 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+    <include layout="@layout/content_toolbar" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-    </android.support.design.widget.AppBarLayout>
+        android:theme="@style/AppTheme.AppBarOverlay"></android.support.design.widget.AppBarLayout>
 
     <fragment
         android:id="@+id/placeholder_fragment"
