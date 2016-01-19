@@ -11,9 +11,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$ForecastFragment">
 
-    <ListView
-        android:id="@+id/listview_forecast"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|top">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText_Search"
+            android:layout_gravity="center_horizontal"
+            android:editable="true"
+            android:hint="@string/editText_Search_hint"
+            android:gravity="center_horizontal"
+            android:inputType="text" />
+
+        <ListView
+            android:id="@+id/listview_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+    </LinearLayout>
 
 </FrameLayout>
