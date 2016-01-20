@@ -8,6 +8,11 @@
         android:title="@string/pref_header_location" />
 
     <header
+        android:fragment="com.example.android.sunshine.app.SettingsActivity$UnitsPreferenceFragment"
+        android:icon="@drawable/ic_sync_black_24dp"
+        android:title="@string/pref_header_units" />
+
+    <header
         android:fragment="com.example.android.sunshine.app.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/pref_header_general" />

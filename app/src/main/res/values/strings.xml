@@ -68,4 +68,22 @@
 
 
     <string name="pref_header_location">Location</string>
+
+    <string name="pref_header_units">Temperature Units</string>
+
+    <string name="pref_title_change_units">Temperature Units</string>
+    <string name="pref_units_metric">Metric</string>
+    <string name="pref_location_key">location_key</string>
+    <string name="pref_units_key">units_key</string>
+
+    <string-array name="pref_change_units_titles">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+    <string-array name="pref_change_units_values">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+
+
 </resources>

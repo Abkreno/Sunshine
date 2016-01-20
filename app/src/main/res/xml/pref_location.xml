@@ -5,7 +5,7 @@
         android:capitalize="words"
         android:defaultValue="@string/pref_default_location_value"
         android:inputType="number"
-        android:key="location_value"
+        android:key="@string/pref_location_key"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"

@@ -2,14 +2,12 @@ package com.example.android.sunshine.app;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -25,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -40,9 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by hamamsy on 08/01/16.
@@ -65,16 +60,26 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.forecastfragment, menu);
+    }
+
+    private void updateWeather() {
+        String location = mSharedPref.getString(SettingsActivity.KEY_LOC, "");
+        new FetchWheatherTask().execute(location);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_referesh) {
-            String location = mSharedPref.getString(SettingsActivity.KEY_LOC_VALUE, "");
-            new FetchWheatherTask().execute(location);
+            updateWeather();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -84,17 +89,12 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String[] forecastArray = {"Today - Sunny - 88/63",
-                "Tommorow - Foggy - 70/40",
-                "Weds - Cloudy - 72/63",
-                "Thurs - Asteroids - 75/63",
-                "Fri - Heavy Rain - 65/75",
-                "Sat - HELP - 81/22",
-                "Sun - Sunny - 80/68"};
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
+
         mForeCastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast,
-                R.id.list_item_forecast_textview, weekForecast);
+                R.id.list_item_forecast_textview, new ArrayList<String>());
+
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForeCastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -250,6 +250,13 @@ public class ForecastFragment extends Fragment {
          */
         private String formatHighLows(double high, double low) {
             // For presentation, assume the user doesn't care about tenths of a degree.
+            String unitType = mSharedPref.getString(SettingsActivity.KEY_CHANGE_UNITS, "");
+
+            if (!unitType.equals(getString(R.string.pref_units_metric))) {
+                high = (high * 1.8) + 32;
+                low = (low * 1.8) + 32;
+            }
+
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
