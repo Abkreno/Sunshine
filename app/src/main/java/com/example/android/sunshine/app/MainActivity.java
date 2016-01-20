@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.audiofx.BassBoost;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_location, false);
     }
 
 

@@ -2,11 +2,15 @@ package com.example.android.sunshine.app;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,8 +51,10 @@ import java.util.List;
 public class ForecastFragment extends Fragment {
     private ArrayAdapter<String> mForeCastAdapter;
     private EditText mSearchEditText;
+    private SharedPreferences mSharedPref;
 
     public ForecastFragment() {
+
     }
 
     @Override
@@ -67,7 +73,8 @@ public class ForecastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_referesh) {
-            new FetchWheatherTask().execute("94043");
+            String location = mSharedPref.getString(SettingsActivity.KEY_LOC_VALUE, "");
+            new FetchWheatherTask().execute(location);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -77,7 +84,7 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        mSharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String[] forecastArray = {"Today - Sunny - 88/63",
                 "Tommorow - Foggy - 70/40",
                 "Weds - Cloudy - 72/63",
