@@ -146,7 +146,7 @@ public class ForecastFragment extends Fragment {
 
             String format = "json";
             String units = "metric";
-            String appid = "2de143494c0b295cca9337e1e96b00e0";
+            String appid = "44db6a862fba0b067b1930da0d769e98";
             int numDays = 7;
 
             try {
@@ -214,7 +214,8 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
-
+            if (forecastJsonStr == null)
+                return null;
             try {
                 return getWeatherDataFromJson(forecastJsonStr, 7);
             } catch (JSONException e) {
